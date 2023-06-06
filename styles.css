@@ -23,6 +23,11 @@ button {
     border-radius: 25px;
 }
 
+.game-over {
+    background-color: red;
+    opacity: 0.8;
+}
+
 .green {
     background-color: green;
 }
@@ -37,4 +42,9 @@ button {
 
 .blue {
     background-color: blue;
+}
+
+.pressed {
+    box-shadow: 0 0 20px white;
+    background-color: grey;
 }
