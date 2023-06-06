@@ -1,9 +1,10 @@
 var colors = ['red', 'blue', 'green', 'yellow'];
 
+var userClickedPattern = [];
 var gamePattern = [];
 
 function nextSequence() {
-    
+
     var random = Math.floor(Math.random() * 3);
     var randomChosenColour = colors[random];
     gamePattern.push(randomChosenColour);
@@ -39,3 +40,8 @@ function playAudio(color) {
             break;
     }
 }
+
+$('button').on('click', function() {
+    var userChoosenColour = $(this).attr('id');
+    userClickedPattern.push(userChoosenColour);
+})
