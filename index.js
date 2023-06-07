@@ -12,9 +12,19 @@ function nextSequence() {
     playAudio(gamePattern[0]);
     setTimeout( function () {
         $('.' + gamePattern[0]).removeClass('pressed')
-    } , 300);
+    } , 100);
    
 }
+
+$('button').on('click', function() {
+    var userChoosenColour = $(this).attr('id');
+    userClickedPattern.push(userChoosenColour);
+    $('.' + userClickedPattern[userClickedPattern.length - 1]).addClass('pressed');
+    playAudio(userClickedPattern[userClickedPattern.length - 1]);
+    setTimeout( function () {
+        $('.' + userClickedPattern[userClickedPattern.length - 1]).removeClass('pressed')
+    } , 100);
+});
 
 function playAudio(color) {
     switch(color) {
@@ -40,8 +50,3 @@ function playAudio(color) {
             break;
     }
 }
-
-$('button').on('click', function() {
-    var userChoosenColour = $(this).attr('id');
-    userClickedPattern.push(userChoosenColour);
-})
