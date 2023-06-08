@@ -11,10 +11,10 @@ function nextSequence() {
     var random = Math.floor(Math.random() * 3);
     var randomChosenColour = colors[random];
     gamePattern.push(randomChosenColour);
-    $('.' + gamePattern[gamePattern.length - 1]).addClass('pressed');
+    $('#' + gamePattern[gamePattern.length - 1]).addClass('pressed');
     playAudio(gamePattern[gamePattern.length - 1]);
     setTimeout( function () {
-        $('.' + gamePattern[gamePattern.length - 1]).removeClass('pressed')
+        $('#' + gamePattern[gamePattern.length - 1]).removeClass('pressed')
     } , 100);
    
 }
@@ -23,10 +23,12 @@ function nextSequence() {
 $('button').on('click', function() {
     var userChoosenColour = $(this).attr('id');
     userClickedPattern.push(userChoosenColour);
-    $('.' + userClickedPattern[userClickedPattern.length - 1]).addClass('pressed');
+    $('#' + userClickedPattern[userClickedPattern.length - 1]).addClass('pressed');
+
     playAudio(userClickedPattern[userClickedPattern.length - 1]);
+    
     setTimeout( function () {
-        $('.' + userClickedPattern[userClickedPattern.length - 1]).removeClass('pressed')
+        $('#' + userClickedPattern[userClickedPattern.length - 1]).removeClass('pressed')
     } , 100);
     checkAnswer();
 });
@@ -47,7 +49,9 @@ function checkAnswer() {
 
     if (userClickedPattern[checkIndex] === gamePattern[checkIndex]) {
         if (userClickedPattern.length === gamePattern.length) {
-            setTimeout(nextSequence, 1000);
+            setTimeout(function () {
+                nextSequence();
+            }, 1000);
         }
     } else {
         $("body").addClass("game-over");
@@ -56,8 +60,19 @@ function checkAnswer() {
         setTimeout(function () {
             $("body").removeClass("game-over");
         }, 200);
+        restart();
     }
     }
+    
+function restart() {
+        $(document).keypress(function () {
+        level = 0;
+        gamePattern = [];
+        $('h1').text('Level ' + level);
+        nextSequence();  
+        })   
+    }
+
 
 function playAudio(className) {
     switch(className) {
