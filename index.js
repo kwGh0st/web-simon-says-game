@@ -28,7 +28,7 @@ $('button').on('click', function() {
     setTimeout( function () {
         $('.' + userClickedPattern[userClickedPattern.length - 1]).removeClass('pressed')
     } , 100);
-    checkAnswer(level);
+    checkAnswer();
 });
 
 $(document).keypress(function (event) {
@@ -41,22 +41,26 @@ $(document).keypress(function (event) {
 });
 
 
-function checkAnswer(currentLevel) {
+function checkAnswer() {
 
-    if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
+    var checkIndex = userClickedPattern.length - 1;
+
+    if (userClickedPattern[checkIndex] === gamePattern[checkIndex]) {
         if (userClickedPattern.length === gamePattern.length) {
             setTimeout(nextSequence, 1000);
-            
         }
-
     } else {
-        console.log("wrong!");
+        $("body").addClass("game-over");
+        $("h1").text("Game Over, Press Any Key to Restart");
+        playAudio("game-over");
+        setTimeout(function () {
+            $("body").removeClass("game-over");
+        }, 200);
+    }
     }
 
-    }
-
-function playAudio(color) {
-    switch(color) {
+function playAudio(className) {
+    switch(className) {
         case 'blue':
             var audio = new Audio('./sounds/blue.mp3');
             audio.play();
@@ -75,6 +79,11 @@ function playAudio(color) {
 
         case 'green':
             var audio = new Audio('./sounds/green.mp3');
+            audio.play();
+            break;
+
+        case 'game-over':
+            var audio = new Audio('./sounds/wrong.mp3');
             audio.play();
             break;
     }
